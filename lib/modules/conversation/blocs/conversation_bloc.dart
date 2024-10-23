@@ -1,31 +1,26 @@
-import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'conversation_event.dart';
 import 'conversation_state.dart';
 
 class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
-  final TickerProvider vsync;
+  bool isExpanded = false;
 
-  late AnimationController _animationController;
-
-  ConversationBloc(this.vsync) : super(AnimationInitial()) {
-    on<StartAnimationEvent>((event, emit) {
-      _animationController = AnimationController(
-        vsync: vsync,
-        duration: const Duration(seconds: 3),
-      )..repeat(reverse: true);
-
-      emit(AnimationRunning(_animationController));
+  ConversationBloc() : super(AnimationInitial()) {
+    on<ToggleAnimationEvent>((event, emit) {
+      isExpanded = !isExpanded;
+      emit(AnimationRunning(isExpanded));
     });
-
-    on<StopAnimationEvent>((event, emit) {
-      _animationController.stop();
+    _startContinuousAnimationCycle();
+  }
+  void _startContinuousAnimationCycle() {
+    Future.delayed(const Duration(seconds: 1), () {
+      add(ToggleAnimationEvent());
+      _startContinuousAnimationCycle();
     });
   }
-
   @override
   Future<void> close() {
-    _animationController.dispose();
     return super.close();
   }
 }

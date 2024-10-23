@@ -7,6 +7,4 @@ abstract class ConversationEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class StartAnimationEvent extends ConversationEvent {}
-
-class StopAnimationEvent extends ConversationEvent {}
+class ToggleAnimationEvent extends ConversationEvent {}

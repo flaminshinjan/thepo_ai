@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
-
 abstract class ConversationState {}
 
 class AnimationInitial extends ConversationState {}
 
 class AnimationRunning extends ConversationState {
-  final AnimationController controller;
+  final bool isExpanded;
 
-  AnimationRunning(this.controller);
+  AnimationRunning(this.isExpanded);
 }
