@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'The Po.ai',
       debugShowCheckedModeBanner: false,
       home: BlocProvider(
         create: (context) => ConversationBloc(),
